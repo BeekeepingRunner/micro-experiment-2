@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: micro-postgres-deploy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      project: micro-postgres-deploy
+  template:
+    metadata:
+      labels:
+        project: micro-postgres-deploy
+    spec:
+      containers:
+        - name: postgres
+          image: postgres:latest
+          imagePullPolicy: Always
+          # is this necessary (volumes)?
+          volumeMounts:
+            - mountPath: /docker-entrypoint-initdb.d
+              name: init-db
+# todo - ?? use configMaps to run init scripts (how to?)
+# todo - ?? use volumes?
+      volumes:
+        - name: init-db
+          configMap:
+            name: db-init-scripts
