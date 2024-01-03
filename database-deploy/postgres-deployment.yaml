@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: micro-postgres-deploy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      project: micro-postgres-deploy
+  template:
+    metadata:
+      labels:
+        project: micro-postgres-deploy
+    spec:
+      containers:
+        - name: postgres
+          image: bbiegajlo/micro-postgres:1.0.0
+          env:
+            - name: POSTGRES_DB
+              value: "micropostgres"
+            - name: POSTGRES_USER
+              value: "postgres"
+            - name: POSTGRES_PASSWORD
+              value: "postgres"
+          ports:
+            - containerPort: 5432
+          # is this necessary (volumes)?
+#          volumeMounts:
+#            - mountPath: /docker-entrypoint-initdb.d
+#              name: init-db
+## todo - ?? use configMaps to run init scripts (how to?)
+## todo - ?? use volumes?
+#      volumes:
+#        - name: init-db
+#          configMap:
+#            name: db-init-scripts
