@@ -1,7 +1,0 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: micro-postgres-config
-data:
-  schema.sql: ""
-  data.sql: ""

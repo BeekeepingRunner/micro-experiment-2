@@ -6,11 +6,11 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      project: micro-postgres-deploy
+      app: micro-postgres-deploy
   template:
     metadata:
       labels:
-        project: micro-postgres-deploy
+        app: micro-postgres-deploy
     spec:
       containers:
         - name: postgres
@@ -24,13 +24,24 @@ spec:
               value: "postgres"
           ports:
             - containerPort: 5432
-          # is this necessary (volumes)?
+          # todo - is this necessary (volumes)?
 #          volumeMounts:
 #            - mountPath: /docker-entrypoint-initdb.d
 #              name: init-db
-## todo - ?? use configMaps to run init scripts (how to?)
-## todo - ?? use volumes?
 #      volumes:
 #        - name: init-db
 #          configMap:
 #            name: db-init-scripts
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: micro-postgres-service
+spec:
+  selector:
+    app: micro-postgres-deploy
+  ports:
+    - protocol: TCP
+      port: 5432  # Default PostgreSQL port

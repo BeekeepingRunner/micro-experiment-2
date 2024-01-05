@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: micro-products-deploy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      project: micro-products-deploy
+  template:
+    metadata:
+      labels:
+        project: micro-products-deploy
+    spec:
+      containers:
+        - name: micro-products
+          image: bbiegajlo/micro-products:1.0.0 # todo create image
+          env:
+            - name: DATABASE_HOST
+              value: postgres-service  # todo Name of your PostgreSQL service
+            - name: DATABASE_USER
+              value: "postgres"
+            - name: DATABASE_PASSWORD
+              value: "postgres"
+# todo passwords can be stored in secrets
+#              valueFrom:
+#                secretKeyRef:
+#                  name: postgres-secret  # Assuming you've set this up
+#                  key: password
+            - name: DATABASE_NAME
+              value: "micropostgres"
+          ports:
+            - containerPort: 8080  # Adjust if app uses a different port
