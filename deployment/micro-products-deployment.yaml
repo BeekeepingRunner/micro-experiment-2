@@ -14,20 +14,35 @@ spec:
     spec:
       containers:
         - name: micro-products
-          image: bbiegajlo/micro-products:1.0.0 # todo create image
+          image: bbiegajlo/micro-products:0.1.1 # change image if necessary
           env:
             - name: DATABASE_HOST
-              value: postgres-service  # todo Name of your PostgreSQL service
+              value: micro-postgres-service  # name of your PostgreSQL service in other deploy.yaml
+            - name: DATABASE_PORT
+              value: "5432"  # Standard PostgreSQL port
             - name: DATABASE_USER
               value: "postgres"
             - name: DATABASE_PASSWORD
               value: "postgres"
-# todo passwords can be stored in secrets
-#              valueFrom:
-#                secretKeyRef:
-#                  name: postgres-secret  # Assuming you've set this up
-#                  key: password
             - name: DATABASE_NAME
               value: "micropostgres"
+          # todo someday - passwords can be stored in secrets
           ports:
             - containerPort: 8080  # Adjust if app uses a different port
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: micro-products-service
+spec:
+  type: NodePort
+  selector:
+    project: micro-products-deploy  # This should match the labels of your app's pods
+  ports:
+    - name: 8080-8080
+      port: 8080  # The port your app is listening on inside the cluster
+      targetPort: 8080  # The target port on the pod
+      protocol: TCP
+      nodePort: 31111  # The port exposed on each node. This must be in the range 30000-32767
