@@ -15,9 +15,7 @@
 
 	<modules>
 		<module>microproducts</module>
-<!--
 		<module>microorders</module>
--->
 	</modules>
 
 	<dependencyManagement>

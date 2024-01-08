@@ -10,12 +10,10 @@
 		<relativePath>../pom.xml</relativePath> <!-- Adjust the path as necessary -->
 	</parent>
 
-	<artifactId>microproducts</artifactId>
+	<artifactId>microorders</artifactId>
 	<version>1.0.0</version>
-	<name>micro products</name>
-	<description>Product service</description>
-
-	<packaging>jar</packaging>
+	<name>microorders</name>
+	<description>Orders service</description>
 
 	<dependencies>
 		<dependency>
@@ -33,16 +31,9 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
-		</dependency>
-
-		<!-- https://mvnrepository.com/artifact/org.postgresql/postgresql -->
-		<dependency>
-			<groupId>org.postgresql</groupId>
-			<artifactId>postgresql</artifactId>
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/org.mapstruct/mapstruct -->
@@ -55,6 +46,7 @@
 			<groupId>org.mapstruct</groupId>
 			<artifactId>mapstruct-processor</artifactId>
 		</dependency>
+
 	</dependencies>
 
 	<build>
@@ -69,6 +61,14 @@
 							<artifactId>lombok</artifactId>
 						</exclude>
 					</excludes>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>16</source>
+					<target>16</target>
 				</configuration>
 			</plugin>
 		</plugins>
