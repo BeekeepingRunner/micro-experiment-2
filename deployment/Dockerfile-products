@@ -2,7 +2,9 @@ FROM maven:3.8.4-openjdk-17-slim as builder
 
 WORKDIR /app
 
-COPY ../microproducts/src ./src
+COPY ../ .
+
+WORKDIR /app/microproducts
 
 RUN mvn clean install -DskipTests
 
