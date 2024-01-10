@@ -12,6 +12,10 @@ spec:
       labels:
         project: micro-products-deploy
     spec:
+      initContainers:
+        - name: init-db
+          image: busybox
+          command: [ 'sh', '-c', 'until nc -z micro-postgres-service 5432; do echo waiting for db; sleep 2; done;' ]
       containers:
         - name: micro-products
           image: bbiegajlo/micro-products:0.2.0 # change image if necessary
@@ -63,6 +67,10 @@ spec:
       labels:
         project: micro-orders-deploy
     spec:
+      initContainers:
+        - name: init-db
+          image: busybox
+          command: [ 'sh', '-c', 'until nc -z micro-postgres-service 5432; do echo waiting for db; sleep 2; done;' ]
       containers:
         - name: micro-orders
           image: bbiegajlo/micro-orders:0.0.1 # change image if necessary
