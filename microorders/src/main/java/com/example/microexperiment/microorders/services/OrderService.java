@@ -6,12 +6,19 @@ import com.example.microexperiment.microorders.repositories.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class OrderService {
 
     private OrderRepository orderRepository;
 
+    public List<Order> getAllOrders() {
+        return orderRepository.findAll();
+    }
+
+    // todo: implement
     public Order submitOrder(OrderRequestDto orderRequestDto) {
         return null;
     }
