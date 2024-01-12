@@ -3,13 +3,13 @@ FROM maven:3.8.4-openjdk-17-slim as builder
 WORKDIR /app
 
 # First copy only the POMs and resolve dependencies (for caching)
-COPY pom.xml .
-COPY microproducts/pom.xml microproducts/
-COPY microorders/pom.xml microorders/
+COPY ../pom.xml .
+COPY ../microproducts/pom.xml microproducts/
+COPY ../microorders/pom.xml microorders/
 RUN mvn dependency:go-offline
 
 # Then copy the source code and build the application
-COPY . .
+COPY .. .
 RUN mvn clean install -DskipTests -pl microorders -am
 
 
