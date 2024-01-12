@@ -9,17 +9,19 @@ Here is the info about how to deploy the system to kubernetes.
 
 ### Current possibilities:
 
-- deployment of postgres database filled with sample data
+One deployment consisting of:
+- postgres database filled with sample data
+- micro-products and micro-orders services connected to the mentioned database
 
 ### In progress:
 
-- micro-products service deployment
 
 ## How to deploy the system
 
 1. Run `deploy-all.bat` (Windows) or `deploy-all.sh` script (Linux)
 2. Get minikube cluster IP by running `minikube ip`
-3. Application should be accessible at `<minikube-ip>:31111` (product service)
+3. Application should be accessible at
+`<minikube-ip>:31111` (product service) and `<minikube-ip:31112>` (orders service)
 
 If you can't send requests to the app, try to forward ports:
 - for product service run `kubectl port-forward svc/micro-products-service 31111:8080`.

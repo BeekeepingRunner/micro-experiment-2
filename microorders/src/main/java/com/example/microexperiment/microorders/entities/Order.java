@@ -16,6 +16,6 @@ public class Order {
 
     private Long customerId; // simulating a customer for now
 
-    @Column
+    @Enumerated(EnumType.STRING)
     private OrderStatus status;
 }
