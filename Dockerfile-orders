@@ -1,0 +1,24 @@
+FROM maven:3.8.4-openjdk-17-slim as builder
+
+WORKDIR /app
+
+# First copy only the POMs and resolve dependencies (for caching)
+COPY pom.xml .
+COPY microproducts/pom.xml microproducts/
+COPY microorders/pom.xml microorders/
+RUN mvn dependency:go-offline
+
+# Then copy the source code and build the application
+COPY . .
+RUN mvn clean install -DskipTests -pl microorders -am
+
+
+FROM openjdk:17-alpine
+
+WORKDIR /app
+
+COPY --from=builder /app/microorders/target/microorders-1.0.0.jar /app/microorders.jar
+
+EXPOSE 8080
+
+ENTRYPOINT ["java", "-jar", "/app/microorders.jar"]
