@@ -1,3 +1,8 @@
-# micro-products
+# micro-experiment 2
 
-Project of a microservice for maintaining products data.
+Multi-module project aiming to simulate e-commerce system.
+
+Consists of three micro-services:
+- product service
+- order service
+- database service (shared between other services)
