@@ -25,7 +25,8 @@ One deployment consisting of:
 
 If you can't send requests to the app, try to forward ports:
 - for product service run `kubectl port-forward svc/micro-products-service 31111:8080`.
-Then request the service at `localhost:31111`
+- for order service run `kubectl port-forward svc/micro-orders-service 31112:8081`.
+Then request the service at `localhost:31111 or localhost:31112`
 
 ### How to update container images
 

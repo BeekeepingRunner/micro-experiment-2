@@ -1,4 +1,4 @@
-package com.example.microexperiment.microorders.controllers;
+package com.example.microexperiment.microorders.resource;
 
 import com.example.microexperiment.microorders.dto.OrderDto;
 import com.example.microexperiment.microorders.dto.OrderRequestDto;

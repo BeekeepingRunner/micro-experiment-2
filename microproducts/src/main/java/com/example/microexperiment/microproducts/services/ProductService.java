@@ -1,9 +1,11 @@
 package com.example.microexperiment.microproducts.services;
 
 import com.example.microexperiment.microproducts.entities.Product;
+import com.example.microexperiment.microproducts.exception.NegativeStockLevelException;
 import com.example.microexperiment.microproducts.repositories.ProductRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,13 +20,21 @@ public class ProductService {
         return productRepository.findAll();
     }
 
-    @Transactional
+    /*@Transactional
     public Long getStockLevel(Long productId) {
         Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new RuntimeException("product not found with id = " + productId));
 
         return product.getStockLevel();
+    }*/
+
+    @Transactional
+    public DecreaseStockResponseDto decreaseStockLevel(DecreaseStockRequestDto requestDto) {
+        Product product = productRepository.findById(requestDto.productId())
+                .orElseThrow(() -> new RuntimeException("No product with id = " + requestDto.productId()));
+
+        Long resultStockLevel = product.decreaseStockLevel(requestDto.quantity());
+
+        return new DecreaseStockResponseDto(product.getId(), product.getName(), resultStockLevel);
     }
-
-
 }
