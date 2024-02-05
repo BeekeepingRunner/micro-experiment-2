@@ -41,7 +41,7 @@ kind: Service
 metadata:
   name: micro-products-service
 spec:
-  type: NodePort
+  type: ClusterIP
   selector:
     project: micro-products-deploy  # This should match the labels of your app's pods
   ports:
@@ -49,7 +49,7 @@ spec:
       port: 8080  # The port your app is listening on inside the cluster
       targetPort: 8080  # The target port on the pod
       protocol: TCP
-      nodePort: 31111  # The port exposed on each node. This must be in the range 30000-32767
+      # nodePort: 31111  # The port exposed on each node. This must be in the range 30000-32767
 
 ---
 
@@ -96,7 +96,7 @@ kind: Service
 metadata:
   name: micro-orders-service
 spec:
-  type: NodePort
+  type: ClusterIP
   selector:
     project: micro-orders-deploy  # This should match the labels of your app's pods
   ports:
@@ -104,4 +104,29 @@ spec:
       port: 8081  # The port your app is listening on inside the cluster
       targetPort: 8081  # The target port on the pod
       protocol: TCP
-      nodePort: 31112  # The port exposed on each node. This must be in the range 30000-32767
+      # nodePort: 31112  # The port exposed on each node. This must be in the range 30000-32767
+
+---
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: micro-ingress
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /products
+            pathType: Prefix
+            backend:
+              service:
+                name: micro-products-service
+                port:
+                  number: 8080
+          - path: /orders
+            pathType: Prefix
+            backend:
+              service:
+                name: micro-orders-service
+                port:
+                  number: 8081

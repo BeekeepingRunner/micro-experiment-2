@@ -13,20 +13,25 @@ One deployment consisting of:
 - postgres database filled with sample data
 - micro-products and micro-orders services connected to the mentioned database
 
-### In progress:
-
-
 ## How to deploy the system
 
-1. Run `deploy-all.bat` (Windows) or `deploy-all.sh` script (Linux)
-2. Get minikube cluster IP by running `minikube ip`
-3. Application should be accessible at
-`<minikube-ip>:31111` (product service) and `<minikube-ip:31112>` (orders service)
+1. Add ingress to minikube: `minikube addons enable ingress`
+2. Run `deploy-all.bat` (Windows) or `deploy-all.sh` script (Linux)
+3. Tunnel a connection: `minikube tunnel`
+4. Application should be accessible at `localhost/products` (product service)
+   and `localhost/orders` (orders service)
 
-If you can't send requests to the app, try to forward ports:
-- for product service run `kubectl port-forward svc/micro-products-service 31111:8080`.
-- for order service run `kubectl port-forward svc/micro-orders-service 31112:8081`.
-Then request the service at `localhost:31111 or localhost:31112`
+### Useful commands for cluster monitoring
+- `kubectl get nodes`
+- `kubectl get pods`
+- `kubectl get deployments`
+- `kubectl get services`
+- `minikube ip`
+
+For debugging - tail logs (assumes stern installed):
+- `kubectl stern deployment/micro-orders-deploy`
+- `kubectl stern deployment/micro-products-deploy`
+- `kubectl stern deployment/micro-postgres-deploy`
 
 ### How to update container images
 
