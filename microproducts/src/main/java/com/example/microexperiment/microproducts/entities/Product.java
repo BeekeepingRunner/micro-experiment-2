@@ -26,12 +26,12 @@ public class Product {
     @Column
     private Long stockLevel;
 
-    public Long decreaseStockLevel(Long quantity) throws NegativeStockLevelException {
+    public void decreaseStockLevel(Long quantity) throws NegativeStockLevelException {
         Long resultLvl = stockLevel - quantity;
         if (resultLvl < 0) {
             throw new NegativeStockLevelException("Stock level cannot be negative");
         }
 
-        return resultLvl;
+        this.stockLevel = resultLvl;
     }
 }

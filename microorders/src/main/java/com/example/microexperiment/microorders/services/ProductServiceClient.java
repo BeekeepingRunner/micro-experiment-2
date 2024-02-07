@@ -1,6 +1,7 @@
 package com.example.microexperiment.microorders.services;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
@@ -11,16 +12,16 @@ import reactor.core.publisher.Mono;
 @RequiredArgsConstructor
 public class ProductServiceClient {
 
-    private final static String URI_DECREASE_STOCK_LEVEL = "decrease-stock-lvl";
+    private final static String URI_DECREASE_STOCK_LEVEL = "/decrease-stock-lvl";
 
     private final WebClient webClient;
 
     public void decreaseStockLevel(Long productId, Long quantity) {
         System.out.println("SENDING REQUEST TO PRODUCT SERVICE");
+
         Mono<DecreaseStockResponseDto> response = webClient.post()
                 .uri(URI_DECREASE_STOCK_LEVEL)
                 .bodyValue(new DecreaseStockRequestDto(productId, quantity))
-                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .accept(MediaType.APPLICATION_JSON)
                 .retrieve()
                 .bodyToMono(DecreaseStockResponseDto.class);

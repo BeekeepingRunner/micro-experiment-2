@@ -33,8 +33,9 @@ public class ProductService {
         Product product = productRepository.findById(requestDto.productId())
                 .orElseThrow(() -> new RuntimeException("No product with id = " + requestDto.productId()));
 
-        Long resultStockLevel = product.decreaseStockLevel(requestDto.quantity());
+        product.decreaseStockLevel(requestDto.quantity());
+        product = productRepository.save(product);
 
-        return new DecreaseStockResponseDto(product.getId(), product.getName(), resultStockLevel);
+        return new DecreaseStockResponseDto(product.getId(), product.getName(), product.getStockLevel());
     }
 }
