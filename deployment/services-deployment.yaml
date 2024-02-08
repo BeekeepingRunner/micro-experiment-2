@@ -18,7 +18,7 @@ spec:
           command: [ 'sh', '-c', 'until nc -z micro-postgres-service 5432; do echo waiting for db; sleep 2; done;' ]
       containers:
         - name: micro-products
-          image: bbiegajlo/micro-products:0.2.3 # change image if necessary
+          image: bbiegajlo/micro-products:0.4.0 # change image if necessary
           env:
             - name: DATABASE_HOST
               value: micro-postgres-service  # name of your PostgreSQL service in other deploy.yaml
@@ -73,7 +73,7 @@ spec:
           command: [ 'sh', '-c', 'until nc -z micro-postgres-service 5432; do echo waiting for db; sleep 2; done;' ]
       containers:
         - name: micro-orders
-          image: bbiegajlo/micro-orders:0.0.8 # change image if necessary
+          image: bbiegajlo/micro-orders:0.2.0 # change image if necessary
           env:
             - name: DATABASE_HOST
               value: micro-postgres-service  # name of your PostgreSQL service in other deploy.yaml

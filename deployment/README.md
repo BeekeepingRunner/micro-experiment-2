@@ -37,6 +37,8 @@ For debugging - tail logs (assumes stern installed):
 
 To update container images apply the following procedure for each container image:
 1. From the deployment directory, build the container image with new tag
-   1. `docker build -t <username/image-name:img-tag> -f .\Dockerfile-orders ..`
-2. Push the image to the registry: `docker image push <username/img-name:img-tag>`
+   - `docker build -t <repository>/micro-orders:<version> -f .\Dockerfile-orders ..`
+   - `docker build -t <repository>/micro-products:<version> -f .\Dockerfile-products ..`
+   - `docker build -t <repository>/micro-postgres:<version> -f .\Dockerfile-postgres .`
+2. Push the image to the registry: `docker image push <repository>/<img-name:img-tag>`
 3. Update image tag in specific deployment .yaml file.
