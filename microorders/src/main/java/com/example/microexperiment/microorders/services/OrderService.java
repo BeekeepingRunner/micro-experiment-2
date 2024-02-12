@@ -4,8 +4,12 @@ import com.example.microexperiment.microorders.dto.OrderRequestDto;
 import com.example.microexperiment.microorders.entities.Order;
 import com.example.microexperiment.microorders.entities.OrderStatus;
 import com.example.microexperiment.microorders.repositories.OrderRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Mono;
 
 import java.util.List;
 
@@ -20,16 +24,25 @@ public class OrderService {
         return orderRepository.findAll();
     }
 
+    public Order getOrder(Long orderId) {
+        return orderRepository.findById(orderId)
+                .orElseThrow(() -> new RuntimeException("Order not found with id = " + orderId));
+    }
+
+    @Transactional
     public Order submitOrder(OrderRequestDto orderRequestDto) {
-        System.out.println("SUBMITTING ORDER");
         Order order = new Order();
         order.setCustomerId(orderRequestDto.customerId());
         order.setStatus(OrderStatus.NEW);
-        System.out.println(order);
 
-        // todo: how to return a response mixed with client response?
-        productServiceClient.decreaseStockLevel(orderRequestDto.productId(), orderRequestDto.quantity());
+        ResponseEntity<DecreaseStockResponseDto> productResponse = productServiceClient
+                .decreaseStockLevel(orderRequestDto.productId(), orderRequestDto.quantity())
+                .block();
 
-        return orderRepository.save(order);
+        if (productResponse != null && productResponse.getStatusCode().equals(HttpStatus.OK)) {
+            return orderRepository.save(order);
+        } else {
+            throw new RuntimeException("Cannot submit an order...");
+        }
     }
 }

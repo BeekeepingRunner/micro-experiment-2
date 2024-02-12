@@ -21,10 +21,15 @@ class ProductController {
         return ResponseEntity.ok(productService.findAll());
     }
 
-    /*@GetMapping("/products/{productId}/stock-level")
-    ResponseEntity<Long> getStockLevel(@PathVariable Long productId) {
+    @GetMapping("/products/{productId}")
+    ResponseEntity<Product> getProduct(@PathVariable(name = "productId") Long productId) {
+        return ResponseEntity.ok(productService.getProduct(productId));
+    }
+
+    @GetMapping("/products/{productId}/stock-level")
+    ResponseEntity<Long> getStockLevel(@PathVariable(name = "productId") Long productId) {
         return ResponseEntity.ok(productService.getStockLevel(productId));
-    }*/
+    }
 
     @PostMapping("/products/decrease-stock-lvl")
     ResponseEntity<DecreaseStockResponseDto> decreaseStockLevel(@RequestBody DecreaseStockRequestDto requestDto) {

@@ -20,18 +20,28 @@ public class ProductService {
         return productRepository.findAll();
     }
 
-    /*@Transactional
+    public Product getProduct(Long productId) {
+        return productRepository.findById(productId)
+                .orElseThrow(() -> new RuntimeException("Product not found with id = " + productId));
+    }
+
+    @Transactional
     public Long getStockLevel(Long productId) {
         Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new RuntimeException("product not found with id = " + productId));
 
         return product.getStockLevel();
-    }*/
+    }
 
     @Transactional
     public DecreaseStockResponseDto decreaseStockLevel(DecreaseStockRequestDto requestDto) {
         Product product = productRepository.findById(requestDto.productId())
                 .orElseThrow(() -> new RuntimeException("No product with id = " + requestDto.productId()));
+
+        Long requestedQuantity = requestDto.quantity();
+        if (product.getStockLevel() < requestedQuantity) {
+            throw new RuntimeException("Cannot decrease stock level of the product. Requested quantity is greater than the stock level");
+        }
 
         product.decreaseStockLevel(requestDto.quantity());
         product = productRepository.save(product);

@@ -8,10 +8,7 @@ import com.example.microexperiment.microorders.services.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.mapstruct.factory.Mappers;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -26,6 +23,12 @@ class OrderController {
     @GetMapping("/orders")
     ResponseEntity<List<Order>> getAllOrders() {
         return ResponseEntity.ok(orderService.getAllOrders());
+    }
+
+    @GetMapping("/orders/{orderId}")
+    ResponseEntity<OrderDto> getOrder(@PathVariable(name = "orderId") Long orderId) {
+        OrderDto orderDto = orderMapper.orderToDto(orderService.getOrder(orderId));
+        return ResponseEntity.ok(orderDto);
     }
 
     @PostMapping("/orders")
