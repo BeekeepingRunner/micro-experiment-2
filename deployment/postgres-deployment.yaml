@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: postgres
-          image: bbiegajlo/micro-postgres:1.1.0
+          image: bbiegajlo/micro-postgres:1.2.0
           env:
             - name: POSTGRES_DB
               value: "micropostgres"
