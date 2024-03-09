@@ -33,6 +33,13 @@ spec:
           # todo someday - passwords can be stored in secrets
           ports:
             - containerPort: 8080  # Adjust if app uses a different port
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "200m"
+            limits:
+              memory: "256Mi"
+              cpu: "250m"
 
 ---
 
@@ -88,6 +95,13 @@ spec:
           # todo someday - passwords can be stored in secrets
           ports:
             - containerPort: 8081  # Adjust if app uses a different port
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "200m"
+            limits:
+              memory: "256Mi"
+              cpu: "250m"
 
 ---
 
