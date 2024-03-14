@@ -33,14 +33,41 @@ spec:
           # todo someday - passwords can be stored in secrets
           ports:
             - containerPort: 8080  # Adjust if app uses a different port
+#          resources:
+#            requests:
+#              memory: "400Mi"
+#              cpu: "300m"
+#            limits:
+#              memory: "512Mi"
+#              cpu: "400m"
+#          resources:
+#            requests:
+#              memory: "512Mi"
+#              cpu: "400m"
+#            limits:
+#              memory: "1024Mi"
+#              cpu: "800m"
+#          resources:
+#            requests:
+#              memory: "1024Mi"
+#              cpu: "800m"
+#            limits:
+#              memory: "2048Mi"
+#              cpu: "1200m"
+#          resources:
+#            requests:
+#              memory: "2048Mi"
+#              cpu: "1200m"
+#            limits:
+#              memory: "4096Mi"
+#              cpu: "1600m"
           resources:
             requests:
-              memory: "128Mi"
-              cpu: "200m"
+              memory: "4096Mi"
+              cpu: "1600m"
             limits:
-              memory: "256Mi"
-              cpu: "250m"
-
+              memory: "8192Mi"
+              cpu: "2000m"
 ---
 
 apiVersion: v1
@@ -95,13 +122,41 @@ spec:
           # todo someday - passwords can be stored in secrets
           ports:
             - containerPort: 8081  # Adjust if app uses a different port
+#          resources:
+#            requests:
+#              memory: "400Mi"
+#              cpu: "300m"
+#            limits:
+#              memory: "512Mi"
+#              cpu: "400m"
+#          resources:
+#            requests:
+#              memory: "512Mi"
+#              cpu: "400m"
+#            limits:
+#              memory: "1024Mi"
+#              cpu: "800m"
+#          resources:
+#            requests:
+#              memory: "1024Mi"
+#              cpu: "800m"
+#            limits:
+#              memory: "2048Mi"
+#              cpu: "1200m"
+#          resources:
+#            requests:
+#              memory: "2048Mi"
+#              cpu: "1200m"
+#            limits:
+#              memory: "4096Mi"
+#              cpu: "1600m"
           resources:
             requests:
-              memory: "128Mi"
-              cpu: "200m"
+              memory: "4096Mi"
+              cpu: "1600m"
             limits:
-              memory: "256Mi"
-              cpu: "250m"
+              memory: "8192Mi"
+              cpu: "2000m"
 
 ---
 

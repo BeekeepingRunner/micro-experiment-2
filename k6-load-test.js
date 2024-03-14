@@ -4,8 +4,8 @@ import { SharedArray } from 'k6/data';
 
 export const options = {
     stages: [
-        { duration: '5s', target: 50 }, // ramp up to 200 users
-        { duration: '20s', target: 50 }, // stable
+        { duration: '5s', target: 800 }, // ramp up to 200 users
+        { duration: '120s', target: 800 }, // stable
         { duration: '5s', target: 0 }    // ramp-down
     ]
 }
