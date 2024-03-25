@@ -3,7 +3,6 @@ kind: Deployment
 metadata:
   name: micro-products-deploy
 spec:
-  replicas: 8
   selector:
     matchLabels:
       project: micro-products-deploy
@@ -35,11 +34,11 @@ spec:
             - containerPort: 8080  # Adjust if app uses a different port
           resources:
             requests:
-              memory: "400Mi"
+              memory: "350Mi"
               cpu: "300m"
             limits:
-              memory: "512Mi"
-              cpu: "400m"
+              memory: "400Mi"
+              cpu: "300m"
 #          resources:
 #            requests:
 #              memory: "512Mi"
@@ -92,7 +91,6 @@ kind: Deployment
 metadata:
   name: micro-orders-deploy
 spec:
-  replicas: 8
   selector:
     matchLabels:
       project: micro-orders-deploy
@@ -124,11 +122,11 @@ spec:
             - containerPort: 8081  # Adjust if app uses a different port
           resources:
             requests:
-              memory: "400Mi"
+              memory: "350Mi"
               cpu: "300m"
             limits:
-              memory: "512Mi"
-              cpu: "400m"
+              memory: "400Mi"
+              cpu: "300m"
 #          resources:
 #            requests:
 #              memory: "512Mi"
@@ -209,6 +207,7 @@ metadata:
   namespace: default
 spec:
   scaleTargetRef:
+    apiVersion: apps/v1
     kind: Deployment
     name: micro-products-deploy
   minReplicas: 1
@@ -219,7 +218,13 @@ spec:
         name: cpu
         target:
           type: Utilization
-          averageUtilization: 50
+          averageUtilization: 10
+    - type: Resource
+      resource:
+        name: memory
+        target:
+          type: Utilization
+          averageUtilization: 10
 
 ---
 
@@ -230,6 +235,7 @@ metadata:
   namespace: default
 spec:
   scaleTargetRef:
+    apiVersion: apps/v1
     kind: Deployment
     name: micro-orders-deploy
   minReplicas: 1
@@ -240,4 +246,10 @@ spec:
         name: cpu
         target:
           type: Utilization
-          averageUtilization: 50
+          averageUtilization: 10
+    - type: Resource
+      resource:
+        name: memory
+        target:
+          type: Utilization
+          averageUtilization: 10
