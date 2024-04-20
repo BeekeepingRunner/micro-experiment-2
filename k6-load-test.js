@@ -4,12 +4,14 @@ import { SharedArray } from 'k6/data';
 
 export const options = {
     stages: [
-        { duration: '10s', target: 300 }, // ramp up
-        { duration: '90s', target: 200 }, // stable
-        { duration: '10s', target: 300 }, // ramp up
-        { duration: '120s', target: 300 }, // stable
+        { duration: '10s', target: 100 }, // ramp up
+        { duration: '90s', target: 100 }, // stable
         { duration: '10s', target: 200 }, // ramp up
-        { duration: '90s', target: 200 }, // ramp up
+        { duration: '120s', target: 200 }, // stable
+        { duration: '10s', target: 300 }, // ramp up
+        { duration: '90s', target: 300 }, // stable
+        { duration: '10s', target: 150 }, // ramp-down
+        { duration: '90s', target: 150 }, // stable
         { duration: '10s', target: 0 }    // ramp-down
     ]
 }

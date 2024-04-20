@@ -4,22 +4,24 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.math.BigDecimal;
+
 @Entity
 @Getter
 @Setter
-@Table(name = "orders")
-public class Order {
+@Table(name = "products")
+public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long customerId; // simulating a customer for now
+    @Column
+    private String name;
 
-    @Enumerated(EnumType.STRING)
-    private OrderStatus status;
+    @Column
+    private BigDecimal pricePerPiece;
 
-    private Long productId;
-
-    private Long requestedProductQuantity;
+    @Column
+    private Long stockLevel;
 }

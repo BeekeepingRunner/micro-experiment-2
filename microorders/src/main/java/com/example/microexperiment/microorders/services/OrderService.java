@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -34,12 +35,14 @@ public class OrderService {
         Order order = new Order();
         order.setCustomerId(orderRequestDto.customerId());
         order.setStatus(OrderStatus.NEW);
+        order.setRequestedProductQuantity(orderRequestDto.quantity());
 
         ResponseEntity<DecreaseStockResponseDto> productResponse = productServiceClient
                 .decreaseStockLevel(orderRequestDto.productId(), orderRequestDto.quantity())
                 .block();
 
         if (productResponse != null && productResponse.getStatusCode().equals(HttpStatus.OK)) {
+            order.setProductId(Objects.requireNonNull(productResponse.getBody()).productId());
             return orderRepository.save(order);
         } else {
             throw new RuntimeException("Cannot submit an order...");

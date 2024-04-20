@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: postgres
-          image: bbiegajlo/micro-postgres:1.3.0
+          image: bbiegajlo/micro-postgres:1.4.0
           env:
             - name: POSTGRES_DB
               value: "micropostgres"
@@ -24,7 +24,13 @@ spec:
               value: "postgres"
           ports:
             - containerPort: 5432
-          # todo - is this necessary (volumes)?
+          resources:
+            requests:
+              memory: "2048Mi"
+              cpu: "800m"
+            limits:
+              memory: "4096Mi"
+              cpu: "1000m"
 #          volumeMounts:
 #            - mountPath: /docker-entrypoint-initdb.d
 #              name: init-db
